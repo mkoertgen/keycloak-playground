@@ -1,0 +1,113 @@
+groups:
+  - name: keycloak.rules
+    rules:
+      # ── Login failure rate ─────────────────────────────────────────────────
+      # Keycloak 26+ native event metrics (KC_FEATURES=user-event-metrics).
+      # Labels: event, realm, clientId  (configured via KC_EVENT_METRICS_USER_TAGS)
+      - alert: KeycloakHighLoginFailureRate
+        expr: >-
+          sum(increase(keycloak_user_events_total{event="login_error"}[30m]))
+          /
+          (
+            sum(increase(keycloak_user_events_total{event="login"}[30m]))
+            + sum(increase(keycloak_user_events_total{event="login_error"}[30m]))
+          ) > 0.1
+        labels:
+          severity: critical
+        annotations:
+          summary: "High login failure rate ({{ $value | humanizePercentage }})"
+          description: "More than 10 % of login attempts failed in the last 30 m."
+
+      # ── Abnormal login activity (brute-force indicator) ────────────────────
+      - alert: KeycloakAbnormalLoginActivity
+        expr: >-
+          sum by (realm, clientId) (
+            increase(keycloak_user_events_total{event="login_error"}[30m])
+          ) > 100
+        labels:
+          severity: warning
+        annotations:
+          summary: "Abnormal login activity on realm={{ $labels.realm }}"
+          description: "More than 100 login errors in 30 m for client {{ $labels.clientId }}."
+
+      # ── HTTP 5xx server errors (absolute) ─────────────────────────────────
+      - alert: KeycloakHTTPServerErrorsAbs
+        expr: >-
+          sum by (uri) (
+            increase(http_server_requests_seconds_count{job="keycloak", outcome="SERVER_ERROR"}[1h])
+          ) > 10
+        labels:
+          severity: info
+        annotations:
+          summary: "Keycloak server errors on {{ $labels.uri }}"
+          description: "More than 10 server errors in 1 h on URI {{ $labels.uri }}."
+
+      # ── HTTP 5xx server errors (percentage) ───────────────────────────────
+      - alert: KeycloakHTTPServerErrors
+        expr: >-
+          sum by (uri) (
+            increase(http_server_requests_seconds_count{job="keycloak", outcome="SERVER_ERROR"}[1h])
+          )
+          /
+          sum by (uri) (
+            increase(http_server_requests_seconds_count{job="keycloak"}[1h])
+          ) > 0.01
+        labels:
+          severity: critical
+        annotations:
+          summary: "High server-error rate on {{ $labels.uri }}"
+          description: "More than 1 % of requests returned 5xx on URI {{ $labels.uri }} in the last 1 h."
+
+      # ── HTTP 4xx client errors (high volume) ──────────────────────────────
+      - alert: KeycloakHTTPClientErrors
+        expr: >-
+          sum by (uri, status) (
+            increase(http_server_requests_seconds_count{
+              job="keycloak",
+              outcome="CLIENT_ERROR",
+              status!="404",
+              uri!~"/realms/.*/protocol/.*/token|/realms/.*/login-actions/authenticate"
+            }[1h])
+          ) > 400
+        labels:
+          severity: warning
+        annotations:
+          summary: "High 4xx error volume on {{ $labels.uri }}"
+          description: "{{ $value | humanize }} client errors ({{ $labels.status }}) in 1 h on {{ $labels.uri }}."
+
+      # ── HTTP 404 spike ─────────────────────────────────────────────────────
+      - alert: KeycloakHTTP404Spike
+        expr: >-
+          sum by (uri) (
+            increase(http_server_requests_seconds_count{job="keycloak", status="404"}[30m])
+          ) >= 350
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "404 spike on {{ $labels.uri }}"
+          description: "{{ $value | humanize }} 404 responses in 30 m on {{ $labels.uri }}."
+
+      # ── Invalid redirect_uri errors ────────────────────────────────────────
+      # Typically indicates a misconfigured OIDC client.
+      - alert: KeycloakInvalidRedirectUri
+        expr: >-
+          sum by (realm, clientId) (
+            increase(keycloak_user_events_total{event="login_error", error="invalid_redirect_uri"}[30m])
+          ) > 30
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Invalid redirect_uri errors for realm={{ $labels.realm }}"
+          description: "{{ $value | humanize }} invalid_redirect_uri errors in 30 m — check OIDC client config for {{ $labels.clientId }}."
+
+      # ── Keycloak pod down ──────────────────────────────────────────────────
+      - alert: KeycloakDown
+        expr: up{job="keycloak"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Keycloak is down"
+          description: "Prometheus cannot reach the Keycloak metrics endpoint."

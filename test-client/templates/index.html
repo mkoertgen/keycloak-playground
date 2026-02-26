@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Keycloak OIDC Test Client</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 600px;
+        width: 100%;
+        padding: 40px;
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 14px;
+      }
+      .status {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .status.authenticated {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .status.unauthenticated {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .status-icon {
+        font-size: 24px;
+      }
+      .user-info {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+      }
+      .user-info h3 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 18px;
+      }
+      .user-info dl {
+        display: grid;
+        grid-template-columns: 120px 1fr;
+        gap: 10px;
+      }
+      .user-info dt {
+        font-weight: 600;
+        color: #555;
+      }
+      .user-info dd {
+        color: #666;
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.2s;
+      }
+      .btn-primary {
+        background: #667eea;
+        color: white;
+      }
+      .btn-primary:hover {
+        background: #5568d3;
+      }
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+      .btn-danger {
+        background: #dc3545;
+        color: white;
+      }
+      .btn-danger:hover {
+        background: #c82333;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #dee2e6;
+        color: #6c757d;
+        font-size: 14px;
+      }
+      .footer a {
+        color: #667eea;
+        text-decoration: none;
+      }
+      .footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔐 Keycloak OIDC Demo</h1>
+      <p class="subtitle">Test Client for OpenID Connect Authentication</p>
+
+      {% if user %}
+      <div class="status authenticated">
+        <span class="status-icon">✓</span>
+        <div>
+          <strong>Authenticated</strong><br />
+          <small>You are logged in as {{ user.name }}</small>
+        </div>
+      </div>
+
+      <div class="user-info">
+        <h3>User Information</h3>
+        <dl>
+          <dt>Subject:</dt>
+          <dd><code>{{ user.sub }}</code></dd>
+
+          <dt>Name:</dt>
+          <dd>{{ user.name }}</dd>
+
+          <dt>Email:</dt>
+          <dd>{{ user.email or 'Not provided' }}</dd>
+
+          <dt>Email Verified:</dt>
+          <dd>{{ '✓ Yes' if user.email_verified else '✗ No' }}</dd>
+        </dl>
+      </div>
+
+      <div class="actions">
+        <a href="{{ url_for('profile') }}" class="btn btn-primary"
+          >View Full Profile</a
+        >
+        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+      </div>
+      {% else %}
+      <div class="status unauthenticated">
+        <span class="status-icon">⚠</span>
+        <div>
+          <strong>Not Authenticated</strong><br />
+          <small>Please log in to access the application</small>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="{{ url_for('login') }}" class="btn btn-primary"
+          >Login with Keycloak</a
+        >
+      </div>
+      {% endif %}
+
+      <div class="footer">
+        <p><strong>Endpoints:</strong></p>
+        <ul style="margin-top: 10px; margin-left: 20px; color: #6c757d">
+          <li>
+            Keycloak Admin:
+            <a href="https://keycloak.localhost/admin" target="_blank"
+              >keycloak.localhost/admin</a
+            >
+          </li>
+          <li>
+            API: <a href="{{ url_for('api_userinfo') }}">GET /api/userinfo</a>
+          </li>
+          <li>Health: <a href="{{ url_for('health') }}">GET /health</a></li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>

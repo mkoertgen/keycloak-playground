@@ -1,0 +1,2 @@
+# Provider jars are build artifacts — run `npm run copy-provider` from keycloak/theme/ to regenerate.
+*.jar

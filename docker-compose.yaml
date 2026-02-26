@@ -1,0 +1,86 @@
+services:
+  keycloak:
+    # Official: quay.io/keycloak/keycloak:26.5.3
+    # Temporarily using Docker Hub mirror due to quay.io registry issues (502/500 errors)
+    # Both registries host the same official Keycloak images
+    # Switch back when quay.io is stable: https://status.quay.io
+    #image: keycloak/keycloak:26.0.5
+    image: quay.io/keycloak/keycloak:26.5.3
+    container_name: keycloak
+    ports:
+      - "8080:8080"
+      - "9000:9000" # Management interface: /health, /metrics
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_PROXY_HEADERS: xforwarded
+      KC_METRICS_ENABLED: "true"
+      KC_HEALTH_ENABLED: "true"
+      # User-event metrics (Keycloak 26+ native, no kc.sh build needed in start-dev)
+      # https://www.keycloak.org/observability/event-metrics
+      KC_FEATURES: "user-event-metrics"
+      KC_EVENT_METRICS_USER_ENABLED: "true"
+      KC_EVENT_METRICS_USER_TAGS: "realm,clientId"
+    command: start-dev
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+      # Custom theme — build first: cd keycloak/theme && npm run build-keycloak-theme
+      - ./keycloak/providers:/opt/keycloak/providers:ro
+
+  test-client:
+    build:
+      context: ./test-client
+    container_name: test-client
+    ports:
+      - "3000:3000"
+    environment:
+      OIDC_ISSUER: ${OIDC_ISSUER:-http://keycloak:8080/realms/demo}
+      OIDC_CLIENT_ID: ${OIDC_CLIENT_ID:-demo-app}
+      OIDC_CLIENT_SECRET: ${OIDC_CLIENT_SECRET:-}
+      OIDC_REDIRECT_URI: ${OIDC_REDIRECT_URI:-http://localhost:3000/callback}
+      ADMIN_API_TOKEN: ${ADMIN_API_TOKEN:-dev-admin-secret}
+    depends_on:
+      keycloak:
+        condition: service_started
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus-docker.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/rules:/etc/prometheus/rules:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.enable-lifecycle"
+    depends_on:
+      keycloak:
+        condition: service_started
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_SERVER_HTTP_PORT: "3000"
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini:ro
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+volumes:
+  keycloak-data:
+  prometheus-data:
+  grafana-data:

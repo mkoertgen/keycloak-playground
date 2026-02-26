@@ -1,0 +1,5 @@
+{"version": 2, "width": 80, "height": 10, "timestamp": 1772095886, "env": {"SHELL": "/usr/bin/zsh", "TERM": "xterm-256color"}, "title": "Keycloak Playground – TOTP code generator"}
+[0.005114, "o", "=== TOTP Code Generator (alice@democorp.com) ===\r\n\r\nCurrent TOTP code:\r\n"]
+[0.165884, "o", "Configuration loaded from:\r\n  [OK] /home/marcel/git/work/secunet/keycloak-playground/smoke-tests/common.env\r\n  [OK] /home/marcel/git/work/secunet/keycloak-playground/smoke-tests/local.env\r\n  [OK] /home/marcel/git/work/secunet/keycloak-playground/smoke-tests/local.env\r\nEnvironment: SMOKE_ENV=local | CI=False | log_level=INFO\r\n"]
+[0.166161, "o", "570453  (2s remaining)\r\n"]
+[0.197485, "o", "\r\nFor live countdown: uv run python totp.py --watch\r\n"]

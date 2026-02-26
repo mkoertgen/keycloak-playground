@@ -1,0 +1,9 @@
+{"version": 2, "width": 120, "height": 25, "timestamp": 1772096465, "env": {"SHELL": "/usr/bin/zsh", "TERM": "xterm-256color"}, "title": "Keycloak Playground – Keycloakify live dev"}
+[0.005804, "o", "=== Keycloakify – live inject into Keycloak ===\r\n\r\nStarting dev server at http://localhost:5173 ...\r\n(live-injects into Keycloak, no jar build needed)\r\n\r\n"]
+[0.107086, "o", "\r\n> keycloak-theme@0.1.0 dev\r\n> vite\r\n\r\n"]
+[0.804062, "o", "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n"]
+[0.804343, "o", "\u001b[1;1H\u001b[0J"]
+[0.804405, "o", "\r\n  \u001b[32m\u001b[1mVITE\u001b[22m v5.2.13\u001b[39m  \u001b[2mready in \u001b[0m\u001b[1m665\u001b[22m\u001b[2m\u001b[0m ms\u001b[22m\r\n\r\n"]
+[0.804597, "o", "  \u001b[32m➜\u001b[39m  \u001b[1mLocal\u001b[22m:   \u001b[36mhttp://localhost:\u001b[1m5173\u001b[22m/\u001b[39m\r\n"]
+[0.804863, "o", "\u001b[2m  \u001b[32m➜\u001b[39m  \u001b[1mNetwork\u001b[22m\u001b[2m: use \u001b[22m\u001b[1m--host\u001b[22m\u001b[2m to expose\u001b[22m\r\n\u001b[2m\u001b[32m  ➜\u001b[39m\u001b[22m\u001b[2m  press \u001b[22m\u001b[1mh + enter\u001b[22m\u001b[2m to show help\u001b[22m\r\n"]
+[8.012291, "o", "\r\nBuild & stage jar for production:\r\n  npm run build-keycloak-theme\r\n  docker compose restart keycloak\r\n  cd ../../tofu && tofu apply  # themes configured in terraform.tfvars\r\n"]

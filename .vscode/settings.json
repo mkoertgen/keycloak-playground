@@ -1,0 +1,69 @@
+{
+  // Python (smoke-tests, automation, test-client)
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.python",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
+  },
+
+  // TypeScript / Node (Keycloakify theme)
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+
+  // Markdown (including Mermaid preview)
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.wordWrap": "on"
+  },
+  "markdown.validate.enabled": true,
+  "markdown.mermaid.enabled": true,
+
+  // YAML (docker-compose, prometheus, grafana provisioning)
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true
+  },
+  "yaml.schemas": {
+    "https://json.schemastore.org/prometheus.json": "prometheus/prometheus*.yml",
+    "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
+  },
+
+  // HCL / OpenTofu
+  "[terraform]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "hashicorp.terraform"
+  },
+  "terraform.languageServer.enable": true,
+
+  // Files
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    ".venv": true,
+    "**/node_modules": true,
+    "**/dist-keycloak": true
+  },
+  "files.associations": {
+    "*.md": "markdown"
+  },
+
+  // Editor
+  "editor.rulers": [100, 120],
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2
+}

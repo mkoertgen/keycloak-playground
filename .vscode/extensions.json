@@ -1,0 +1,35 @@
+{
+  "recommendations": [
+    // Docker & Compose
+    "ms-azuretools.vscode-docker",
+
+    // Python (smoke-tests, automation, test-client)
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.debugpy",
+
+    // TypeScript / Node (Keycloakify theme)
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+
+    // Terraform / OpenTofu (HCL)
+    "hashicorp.terraform",
+
+    // Markdown & Mermaid
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-mermaid",
+    "davidanson.vscode-markdownlint",
+
+    // YAML (docker-compose, prometheus, grafana provisioning)
+    "redhat.vscode-yaml",
+
+    // REST Client (manual Keycloak API calls)
+    "humao.rest-client",
+
+    // Git
+    "eamodio.gitlens",
+
+    // Editor
+    "editorconfig.editorconfig"
+  ]
+}

@@ -1,0 +1,56 @@
+# Keycloak Playground Smoke Tests
+# Dependencies managed via this file. Install with: uv sync (or pip install -e .)
+
+[project]
+name = "keycloak-playground-smoke-tests"
+version = "0.1.0"
+description = "Smoke tests for Keycloak Playground"
+requires-python = ">=3.13"
+dependencies = [
+    "pytest>=8.0.0",
+    "requests>=2.31.0",
+    "pytest-html>=4.0.0",
+    "pydantic-settings>=2.0.0",
+    "pytest-playwright>=0.5.0",
+    "playwright>=1.48.0",
+    "pyotp>=2.9.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "--strict-markers --tb=short"
+markers = [
+    "browser: Browser-based tests using Playwright"
+]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(name)s - %(message)s"
+log_cli_date_format = "%H:%M:%S"
+
+# Playwright traces and artifacts:
+# - Traces saved to test-results/{test_name}/trace.zip
+# - Videos saved to test-results/videos/ (when tracing is enabled)
+# - Controlled by PLAYWRIGHT__TRACE setting (on, off, on-first-retry, retain-on-failure)
+
+# Test selection examples:
+# pytest                      # Run all tests
+# pytest -m browser           # Run only browser tests
+# pytest -m "not browser"     # Run only non-browser tests
+# pytest --tracing=on         # Enable traces for all tests
+
+[tool.ruff]
+line-length = 120
+indent-width = 2
+respect-gitignore = true
+
+[tool.ruff.format]
+indent-style = "space"
+quote-style = "double"
+line-ending = "lf"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = []

@@ -1,0 +1,63 @@
+/* ============================================================
+   Account console — PatternFly v5 branding overrides
+   Matches the login theme palette (slate-900 / blue-500)
+   ============================================================ */
+
+:root,
+.pf-v5-theme-dark {
+    /* Brand / accent */
+    --pf-v5-global--primary-color--100: #3b82f6;
+    --pf-v5-global--primary-color--200: #2563eb;
+    --pf-v5-global--link--Color: #3b82f6;
+    --pf-v5-global--link--Color--hover: #2563eb;
+    --pf-v5-global--active-color--100: #3b82f6;
+
+    /* Page background */
+    --pf-v5-global--BackgroundColor--100: #0f172a;
+    --pf-v5-global--BackgroundColor--200: #1e293b;
+
+    /* Text */
+    --pf-v5-global--Color--100: #f1f5f9;
+    --pf-v5-global--Color--200: #94a3b8;
+    --pf-v5-global--Color--300: #64748b;
+
+    /* Nav sidebar */
+    --pf-v5-c-nav--BackgroundColor: #1e293b;
+    --pf-v5-c-nav__link--Color: #cbd5e1;
+    --pf-v5-c-nav__link--hover--Color: #f1f5f9;
+    --pf-v5-c-nav__link--m-current--Color: #3b82f6;
+    --pf-v5-c-nav__link--m-current--BackgroundColor: rgba(59, 130, 246, 0.12);
+
+    /* Page header */
+    --pf-v5-c-masthead--BackgroundColor: #0f172a;
+    --pf-v5-c-masthead--BorderBottomColor: rgba(59, 130, 246, 0.25);
+
+    /* Cards */
+    --pf-v5-c-card--BackgroundColor: #1e293b;
+    --pf-v5-c-card--BorderColor: rgba(59, 130, 246, 0.15);
+
+    /* Inputs */
+    --pf-v5-c-form-control--BackgroundColor: rgba(255, 255, 255, 0.06);
+    --pf-v5-c-form-control--BorderBottomColor: rgba(59, 130, 246, 0.4);
+
+    /* Buttons */
+    --pf-v5-c-button--m-primary--BackgroundColor: #3b82f6;
+    --pf-v5-c-button--m-primary--hover--BackgroundColor: #2563eb;
+    --pf-v5-c-button--m-primary--active--BackgroundColor: #1d4ed8;
+}
+
+/* Page chrome */
+.pf-v5-c-page {
+    background-color: #0f172a;
+}
+
+/* Force dark text on light-badge variants so they remain readable */
+.pf-v5-c-label {
+    --pf-v5-c-label--BackgroundColor: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+}
+
+/* Masthead border accent */
+.pf-v5-c-masthead {
+    border-bottom: 1px solid rgba(59, 130, 246, 0.25);
+}
