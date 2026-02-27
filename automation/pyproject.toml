@@ -15,5 +15,5 @@ dependencies = [
     "apscheduler>=3.10.4",
 ]
 
-[tool.uv]
-dev-dependencies = []
+[dependency-groups]
+dev = []

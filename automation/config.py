@@ -15,9 +15,9 @@ class Settings(BaseSettings):
 
     # Keycloak
     keycloak_url: str
-    keycloak_admin_user: str
+    keycloak_admin_user: str = "admin"
     keycloak_admin_password: SecretStr
-    keycloak_realm: str = "factory"
+    keycloak_realm: str = "demo"
 
     # GitLab
     gitlab_url: str

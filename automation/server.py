@@ -14,10 +14,11 @@ from typing import Any
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
-from clients import GitLabClient, KeycloakClient
 from config import Settings
 from fastapi import FastAPI, Header, HTTPException, Request
-from group_sync import GroupSync
+from gl.client import GitLabClient
+from gl.group_sync import GroupSync
+from kc.client import KeycloakClient
 from pydantic import BaseModel
 
 # Setup logging
@@ -418,7 +419,7 @@ async def handle_keycloak_user_created(
     Expected payload:
     {
         "eventType": "USER_CREATED",
-        "realmId": "factory",
+        "realmId": "demo",
         "userId": "user-uuid",
         "username": "john.doe",
         "email": "john.doe@example.com"
