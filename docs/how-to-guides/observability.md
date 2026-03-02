@@ -9,9 +9,9 @@ Keycloak metrics out of the box.
 | :------------------------------------------------: | :------------------------------------------: |
 | ![Grafana dashboard](../img/grafana-dashboard.png) | ![Grafana alerts](../img/grafana-alerts.png) |
 
-|               Prometheus – targets                |
-| :-----------------------------------------------: |
-| ![Prometheus targets](img/prometheus-targets.png) |
+|                 Prometheus – targets                 |
+| :--------------------------------------------------: |
+| ![Prometheus targets](../img/prometheus-targets.png) |
 
 ## Services
 
