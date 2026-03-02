@@ -14,9 +14,9 @@ Nothing needs to be configured in the Admin UI by hand.
 
 ## Gallery
 
-|      Keycloak Admin Console – demo realm       |
-| :--------------------------------------------: |
-| ![Admin Console](img/keycloak-admin-realm.png) |
+|        Keycloak Admin Console – demo realm        |
+| :-----------------------------------------------: |
+| ![Admin Console](../img/keycloak-admin-realm.png) |
 
 ## Terminal walkthrough
 

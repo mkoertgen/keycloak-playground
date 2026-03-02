@@ -4,9 +4,9 @@ Pytest suite verifying the full Keycloak playground stack after provisioning.
 
 ## Gallery
 
-|      Headful browser test (Playwright)       |             JUnit HTML report              |
-| :------------------------------------------: | :----------------------------------------: |
-| ![Browser test](img/smoke-tests-browser.png) | ![JUnit report](img/smoke-tests-junit.png) |
+|        Headful browser test (Playwright)        |               JUnit HTML report               |
+| :---------------------------------------------: | :-------------------------------------------: |
+| ![Browser test](../img/smoke-tests-browser.png) | ![JUnit report](../img/smoke-tests-junit.png) |
 
 ## Terminal walkthrough
 

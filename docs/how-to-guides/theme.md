@@ -5,13 +5,13 @@ The playground ships a [Keycloakify 11](https://www.keycloakify.dev/) starter in
 
 ## Gallery
 
-|                 Default theme                 |                Custom theme                 |
-| :-------------------------------------------: | :-----------------------------------------: |
-| ![Default login](img/theme-login-default.png) | ![Custom login](img/theme-login-custom.png) |
+|                  Default theme                   |                  Custom theme                  |
+| :----------------------------------------------: | :--------------------------------------------: |
+| ![Default login](../img/theme-login-default.png) | ![Custom login](../img/theme-login-custom.png) |
 
 <p align="center">
   <strong>Account Console – 2FA enrollment</strong><br>
-  <img src="img/theme-account-2fa.png" alt="2FA enrollment" width="600">
+  <img src="../img/theme-account-2fa.png" alt="2FA enrollment" width="600">
 </p>
 
 ## Quick dev workflow
